@@ -117,7 +117,7 @@
             50% { transform: scale(1.2) rotate(3deg); }
         }
 
-        /* Container principal - Ajustado para ocupar mais espaço */
+        /* Container principal */
         .container {
             max-width: 95%;
             width: 100%;
@@ -183,7 +183,7 @@
             font-weight: 300;
             letter-spacing: 1px;
             animation: pulse-text 3s ease-in-out infinite;
-            display: block; /* Garante que o parágrafo seja exibido */
+            display: block;
         }
 
         @keyframes pulse-text {
@@ -196,7 +196,7 @@
             content: var(--girlfriend-name);
         }
 
-        /* Card principal dark theme melhorado */
+        /* Card principal dark theme */
         .love-card {
             background: linear-gradient(135deg, 
                 rgba(17, 17, 17, 0.95) 0%, 
@@ -334,7 +334,130 @@
             50% { box-shadow: 0 15px 35px rgba(255, 0, 64, 0.6), 0 0 20px var(--gold); }
         }
 
-        /* Galeria de fotos - 3 por linha mobile-first */
+        /* MURAL DE FOTOS COM EFEITO ESPELHADO MELHORADO */
+        .featured-gallery {
+            margin: 60px 0;
+            text-align: center;
+        }
+
+        .featured-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(45deg, var(--accent-red), var(--gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 40px;
+            animation: title-shine 2s ease-in-out infinite;
+        }
+
+        .featured-container {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+            height: 500px;
+            border-radius: 25px;
+            overflow: hidden;
+            box-shadow: 
+                0 25px 60px rgba(0, 0, 0, 0.8),
+                0 0 40px rgba(255, 0, 64, 0.3);
+            border: 3px solid rgba(255, 0, 64, 0.5);
+        }
+
+        .featured-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 1.5s ease-in-out;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .featured-slide.active {
+            opacity: 1;
+        }
+
+        .slide-content {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Imagem principal centralizada */
+        .slide-image {
+            max-width: 90%;
+            max-height: 90%;
+            object-fit: contain;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+            z-index: 2;
+            position: relative;
+        }
+
+        /* Efeito de fundo espelhado com blur */
+        .slide-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            filter: blur(20px) brightness(0.6) saturate(1.2);
+            transform: scale(1.1);
+            z-index: 1;
+            opacity: 0.8;
+        }
+
+        /* Overlay gradiente para melhor contraste */
+        .slide-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                45deg,
+                rgba(255, 0, 64, 0.1) 0%,
+                rgba(0, 0, 0, 0.6) 50%,
+                rgba(255, 0, 64, 0.1) 100%
+            );
+            z-index: 1;
+        }
+
+        .featured-nav {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+            z-index: 100;
+        }
+
+        .nav-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .nav-dot.active {
+            background: var(--accent-red);
+            transform: scale(1.3);
+            box-shadow: 0 0 10px var(--accent-red);
+        }
+
+        /* Galeria de fotos - 3 por linha */
         .photo-gallery {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -360,6 +483,7 @@
             transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
             animation: frame-float 5s ease-in-out infinite;
             border: 1px solid rgba(255, 0, 64, 0.4);
+            cursor: pointer;
         }
 
         .photo-frame:nth-child(1) { animation-delay: 0s; }
@@ -424,7 +548,50 @@
             transform: scale(1.02);
         }
 
-        /* Texto de fallback melhorado */
+        /* Modal para fotos ampliadas */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 10000;
+            backdrop-filter: blur(20px);
+        }
+
+        .modal-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            max-width: 90%;
+            max-height: 90%;
+            border-radius: 20px;
+            box-shadow: 0 0 50px rgba(255, 0, 64, 0.5);
+            border: 3px solid rgba(255, 0, 64, 0.3);
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            color: var(--white);
+            font-size: 3rem;
+            font-weight: bold;
+            cursor: pointer;
+            z-index: 10001;
+            text-shadow: 0 0 10px var(--accent-red);
+            transition: all 0.3s ease;
+        }
+
+        .close-modal:hover {
+            color: var(--accent-red);
+            transform: scale(1.2);
+        }
+
+        /* Texto de fallback */
         .photo-frame[data-fallback] {
             display: flex;
             flex-direction: column;
@@ -446,7 +613,7 @@
             opacity: 0.8;
         }
 
-        /* Mensagem especial dark theme */
+        /* Mensagem especial */
         .special-message {
             background: var(--glass-bg);
             backdrop-filter: blur(25px);
@@ -512,6 +679,44 @@
             line-height: 1.8;
             text-align: center;
             font-weight: 300;
+        }
+
+        /* Controles de Música */
+        .music-controls {
+            background: var(--glass-bg);
+            backdrop-filter: blur(25px);
+            border-radius: 20px;
+            padding: 20px;
+            margin: 20px auto;
+            max-width: 800px;
+            border: 2px solid var(--glass-border);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .control-btn {
+            background: linear-gradient(45deg, var(--accent-red), var(--deep-red));
+            color: var(--white);
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(255, 0, 64, 0.3);
+        }
+
+        .control-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(255, 0, 64, 0.5);
+        }
+
+        .control-btn.active {
+            background: linear-gradient(45deg, var(--gold), var(--accent-red));
+            box-shadow: 0 0 20px var(--gold);
         }
 
         /* Seção de Músicas */
@@ -613,7 +818,7 @@
             color: var(--white);
         }
 
-        /* Footer dark theme */
+        /* Footer */
         .footer {
             text-align: center;
             padding: 60px 0;
@@ -655,7 +860,7 @@
             75% { transform: scale(1.2) rotate(3deg); }
         }
 
-        /* Efeitos de explosão dark */
+        /* Efeitos de explosão */
         .heart-explosion {
             position: fixed;
             pointer-events: none;
@@ -679,7 +884,7 @@
             }
         }
 
-        /* Loading dark theme */
+        /* Loading */
         .loading-overlay {
             position: fixed;
             top: 0;
@@ -710,119 +915,32 @@
             to { opacity: 0; visibility: hidden; }
         }
 
-        /* Responsivo melhorado - Mobile First */
+        /* Responsivo */
         @media (max-width: 480px) {
-            .header h1 { 
-                font-size: 2.8rem; 
-                margin-bottom: 15px;
-            }
-            .header p { 
-                font-size: 1.1rem; 
-            }
-            .love-card { 
-                padding: 30px 20px; 
-                margin: 30px 0;
-                border-radius: 20px;
-            }
-            .love-card h2 { 
-                font-size: 2.2rem; 
-                margin-bottom: 25px;
-            }
-            .love-message { 
-                font-size: 1.1rem; 
-                margin-bottom: 30px;
-            }
-            .surprise-btn {
-                padding: 18px 35px;
-                font-size: 1.2rem;
-            }
-            .photo-gallery { 
-                grid-template-columns: repeat(3, 1fr);
-                gap: 10px; 
-                margin: 40px 0;
-            }
-            .photo-frame {
-                border-radius: 15px;
-                padding: 6px;
-            }
-            .photo-frame img {
-                border-radius: 10px;
-            }
-            .photo-frame[data-fallback] {
-                font-size: 1.5rem;
-            }
-            .photo-frame[data-fallback] small {
-                font-size: 0.6rem;
-                margin-top: 5px;
-            }
-            .special-message {
-                padding: 30px 20px;
-                border-radius: 20px;
-            }
-            .special-message h3 {
-                font-size: 2rem;
-            }
-            .special-message p {
-                font-size: 1.1rem;
-            }
-            .music-title {
-                font-size: 2rem;
-            }
-            .music-item {
-                flex-direction: column;
-                text-align: center;
-            }
-            .music-cover {
-                margin-right: 0;
-                margin-bottom: 15px;
-            }
-            .music-info {
-                text-align: center;
-            }
+            .header h1 { font-size: 2.8rem; }
+            .header p { font-size: 1.1rem; }
+            .love-card { padding: 30px 20px; }
+            .love-card h2 { font-size: 2.2rem; }
+            .love-message { font-size: 1.1rem; }
+            .surprise-btn { padding: 18px 35px; font-size: 1.2rem; }
+            .photo-gallery { grid-template-columns: repeat(3, 1fr); gap: 10px; }
+            .featured-container { height: 300px; }
+            .music-controls { flex-direction: column; }
+            .control-btn { width: 100%; }
+            .slide-image { max-width: 95%; max-height: 95%; }
         }
 
         @media (min-width: 481px) and (max-width: 768px) {
-            .header h1 { 
-                font-size: 3.5rem; 
-            }
-            .love-card { 
-                padding: 50px 35px; 
-            }
-            .love-card h2 { 
-                font-size: 2.8rem; 
-            }
-            .photo-gallery { 
-                grid-template-columns: repeat(3, 1fr);
-                gap: 20px; 
-            }
-            .music-item {
-                flex-direction: row;
-                text-align: left;
-            }
-            .music-cover {
-                margin-right: 20px;
-                margin-bottom: 0;
-            }
-            .music-info {
-                text-align: left;
-            }
+            .header h1 { font-size: 3.5rem; }
+            .love-card { padding: 50px 35px; }
+            .love-card h2 { font-size: 2.8rem; }
+            .photo-gallery { grid-template-columns: repeat(3, 1fr); gap: 20px; }
+            .featured-container { height: 400px; }
         }
 
-        @media (min-width: 769px) and (max-width: 1024px) {
-            .photo-gallery { 
-                grid-template-columns: repeat(3, 1fr);
-                gap: 25px; 
-            }
-        }
-
-        @media (min-width: 1025px) {
-            .photo-gallery { 
-                grid-template-columns: repeat(3, 1fr);
-                gap: 30px; 
-                max-width: 900px;
-                margin-left: auto;
-                margin-right: auto;
-            }
+        @media (min-width: 769px) {
+            .photo-gallery { grid-template-columns: repeat(3, 1fr); gap: 25px; }
+            .featured-container { height: 500px; }
         }
 
         /* Animações de entrada */
@@ -831,12 +949,7 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        @keyframes slideUp {
-            from { opacity: 0; transform: translateY(50px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* Novos estilos para efeitos de clique */
+        /* Efeitos de clique */
         .click-effect {
             position: fixed;
             pointer-events: none;
@@ -848,14 +961,8 @@
         }
 
         @keyframes click-animation {
-            0% {
-                opacity: 1;
-                transform: translate(-50%, -50%) scale(0.5);
-            }
-            100% {
-                opacity: 0;
-                transform: translate(-50%, -100%) scale(1.5);
-            }
+            0% { opacity: 1; transform: translate(-50%, -50%) scale(0.5); }
+            100% { opacity: 0; transform: translate(-50%, -100%) scale(1.5); }
         }
 
         .ripple-effect {
@@ -869,10 +976,7 @@
         }
 
         @keyframes ripple {
-            to {
-                transform: scale(4);
-                opacity: 0;
-            }
+            to { transform: scale(4); opacity: 0; }
         }
     </style>
 </head>
@@ -890,6 +994,12 @@
     
     <!-- Efeito de ondas -->
     <div class="wave-bg"></div>
+
+    <!-- Modal para fotos ampliadas -->
+    <div class="modal" id="imageModal">
+        <span class="close-modal" onclick="closeModal()">&times;</span>
+        <img class="modal-content" id="modalImage">
+    </div>
 
     <div class="container">
         <header class="header">
@@ -917,569 +1027,43 @@
             </div>
         </main>
 
-        <section class="photo-gallery">
-            <!-- FOTO 1 - COLOQUE O LINK DA FOTO AQUI -->
-            <div class="photo-frame">
-                <img src="https://drive.google.com/thumbnail?sz=w1000&id=1ba6YAFmS_rXNKvNc1jbwQu96WkZJIjnr" 
-                onerror="this.onerror=null; this.src='https://via.placeholder.com/300x300?text=Foto+Não+Carregada';">
+        <!-- MURAL DE FOTOS COM EFEITO ESPELHADO MELHORADO -->
+        <section class="featured-gallery">
+            <h2 class="featured-title">Nossos Momentos Especiais ✨</h2>
+            <div class="featured-container" id="featuredContainer">
+                <!-- As fotos serão inseridas via JavaScript -->
             </div>
-            
-            <!-- FOTO 2 - COLOQUE O LINK DA FOTO AQUI -->
-            <div class="photo-frame">
-                <img src="https://drive.google.com/thumbnail?sz=w1000&id=1bKApvK61C2__XWYSCzMJG0JnAEt_grCg" onerror="this.style.display='none'; this.parentNode.innerHTML='💕<br><small>Foto 2</small>';">
-            </div>
-            
-            <!-- FOTO 3 - COLOQUE O LINK DA FOTO AQUI -->
-            <div class="photo-frame">
-                <img src="https://drive.google.com/thumbnail?sz=w1000&id=1b0xb8bOacg_xCzPJcEMUX5ngzBU93Uvd" onerror="this.style.display='none'; this.parentNode.innerHTML='🌹<br><small>Foto 3</small>';">
-            </div>
-            
-            <!-- FOTO 4 - COLOQUE O LINK DA FOTO AQUI -->
-            <div class="photo-frame">
-                <img src="https://drive.google.com/thumbnail?sz=w1000&id=1_enURdtUMI_XXWXasbL5zkIbxgRyXeM9" onerror="this.style.display='none'; this.parentNode.innerHTML='✨<br><small>Foto 4</small>';">
-            </div>
-            
-            <!-- FOTO 5 - COLOQUE O LINK DA FOTO AQUI -->
-            <div class="photo-frame">
-                <img src="https://drive.google.com/thumbnail?sz=w1000&id=1_eSaWLuLT090dxSlSI-1FFqFQepSDwhh" onerror="this.style.display='none'; this.parentNode.innerHTML='💖<br><small>Foto 5</small>';">
-            </div>
-            
-            <!-- FOTO 6 - COLOQUE O LINK DA FOTO AQUI -->
-            <div class="photo-frame">
-                <img src="https://drive.google.com/thumbnail?sz=w1000&id=1_cTd8a1QA3vghnwJ4DzPBUN-KB4tsA8Z"this.style.display='none'; this.parentNode.innerHTML='🥰<br><small>Foto 6</small>';">
-            </div>
-
-            <!-- FOTO 7 - COLOQUE O LINK DA FOTO AQUI -->
-            <div class="photo-frame">
-                <img src="https://drive.google.com/thumbnail?sz=w1000&id=1JNHqIWNYXtmaHn9ns5P6Ny7KNJxIBlZa" onerror="this.style.display='none'; this.parentNode.innerHTML='🥰<br><small>Foto 6</small>';">
-            </div>
-
-            <!-- FOTO 8 - COLOQUE O LINK DA FOTO AQUI -->
-            <div class="photo-frame">
-                <img src="https://drive.google.com/thumbnail?sz=w1000&id=1aCwSVFvR_PUGDqwXYPZuIIfuiYfQFrTu" onerror="this.style.display='none'; this.parentNode.innerHTML='🥰<br><small>Foto 6</small>';">
-            </div>
-
-            <!-- FOTO 9 - COLOQUE O LINK DA FOTO AQUI -->
-            <div class="photo-frame">
-                <img src="https://drive.google.com/thumbnail?sz=w1000&id=1bE-5TeKu2jEa9bxJy2xvrwp1sOpIK-FR" onerror="this.style.display='none'; this.parentNode.innerHTML='🥰<br><small>Foto 6</small>';">
-            </div>
-
-            <!-- FOTO 10 - COLOQUE O LINK DA FOTO AQUI -->
-            <div class="photo-frame">
-                <img src="https://drive.google.com/thumbnail?sz=w1000&id=1aBVEBxpPZQ9Ut8PSynVcov3XQ8Nn2UoV" onerror="this.style.display='none'; this.parentNode.innerHTML='🥰<br><small>Foto 6</small>';">
-            </div>
-
-            <!-- FOTO 11 - COLOQUE O LINK DA FOTO AQUI -->
-            <div class="photo-frame">
-                <img src="https://drive.google.com/thumbnail?sz=w1000&id=1bCTXbM5llTueeK-lZfW7z_h12Lgk7ww6" onerror="this.style.display='none'; this.parentNode.innerHTML='🥰<br><small>Foto 6</small>';">
-            </div>
-
-            <!-- FOTO 12 - COLOQUE O LINK DA FOTO AQUI -->
-            <div class="photo-frame">
-                <img src="https://drive.google.com/thumbnail?sz=w1000&id=1bAIeM1wnr5YPkeHYVPSiMubsGMQpQ3-2" onerror="this.style.display='none'; this.parentNode.innerHTML='🥰<br><small>Foto 6</small>';">
-            </div>
-
-            <!-- FOTO 13 - COLOQUE O LINK DA FOTO AQUI -->
-            <div class="photo-frame">
-                <img src="https://drive.google.com/thumbnail?sz=w1000&id=1b2opPj5p4IByF9MLM7kKhzXYulgkwB6q" onerror="this.style.display='none'; this.parentNode.innerHTML='🥰<br><small>Foto 6</small>';">
-            </div>
-
-            <!-- FOTO 14 - COLOQUE O LINK DA FOTO AQUI -->
-            <div class="photo-frame">
-                <img src="https://drive.google.com/thumbnail?sz=w1000&id=1bQGBr2k44IEWImy3J-1l2MgqCmd_YmrY" onerror="this.style.display='none'; this.parentNode.innerHTML='🥰<br><small>Foto 6</small>';">
-            </div>
-
-            <!-- FOTO 15 - COLOQUE O LINK DA FOTO AQUI -->
-            <div class="photo-frame">
-                <img src="https://drive.google.com/thumbnail?sz=w1000&id=1bRaUT9LCTpRSar5EoumM5Ui0ypD6dL3A" onerror="this.style.display='none'; this.parentNode.innerHTML='🥰<br><small>Foto 6</small>';">
-            </div>
-
-            <!-- FOTO 16 - COLOQUE O LINK DA FOTO AQUI -->
-            <div class="photo-frame">
-                <img src="https://drive.google.com/thumbnail?sz=w1000&id=1bueEnxAEl2_Op_oUTAUtH8gPnV6NWxaQ" onerror="this.style.display='none'; this.parentNode.innerHTML='🥰<br><small>Foto 6</small>';">
-            </div>
-
-            <!-- FOTO 17 - COLOQUE O LINK DA FOTO AQUI -->
-            <div class="photo-frame">
-                <img src="https://drive.google.com/thumbnail?sz=w1000&id=1bkzKQgKaHkDJDkL_0z-yJSDOy0tsJIgI" onerror="this.style.display='none'; this.parentNode.innerHTML='🥰<br><small>Foto 6</small>';">
-            </div>
-
-            <!-- FOTO 18 - COLOQUE O LINK DA FOTO AQUI -->
-            <div class="photo-frame">
-                <img src="https://drive.google.com/thumbnail?sz=w1000&id=1bePA-ctgGcAFl-l3moGEX8pbPj2p-YvZ" onerror="this.style.display='none'; this.parentNode.innerHTML='🥰<br><small>Foto 6</small>';">
-            </div>
-
-            <!-- FOTO 19 - COLOQUE O LINK DA FOTO AQUI -->
-            <div class="photo-frame">
-                <img src="https://drive.google.com/thumbnail?sz=w1000&id=1cAiKIyd63CkAGUjRbWDFjJyGYrF40Dmj" onerror="this.style.display='none'; this.parentNode.innerHTML='🥰<br><small>Foto 6</small>';">
-            </div>
-
-            <!-- FOTO 20 - COLOQUE O LINK DA FOTO AQUI -->
-            <div class="photo-frame">
-                <img src="https://drive.google.com/thumbnail?sz=w1000&id=1cCFll07FKV4py1VRtNoyqJbBXRuHKoSB" onerror="this.style.display='none'; this.parentNode.innerHTML='🥰<br><small>Foto 6</small>';">
-            </div>
-
-            <!-- FOTO 21 - COLOQUE O LINK DA FOTO AQUI -->
-            <div class="photo-frame">
-                <img src="https://drive.google.com/thumbnail?sz=w1000&id=1cCvMYipf-UjNugOD-TdoC69TPETdOg0O" onerror="this.style.display='none'; this.parentNode.innerHTML='🥰<br><small>Foto 6</small>';">
-            </div>
-
-            <!-- FOTO 22 - COLOQUE O LINK DA FOTO AQUI -->
-            <div class="photo-frame">
-                <img src="https://drive.google.com/thumbnail?sz=w1000&id=1cEATR5SwjeKm243YXcNpe3yzxX0epGaX" onerror="this.style.display='none'; this.parentNode.innerHTML='🥰<br><small>Foto 6</small>';">
-            </div>
-
-            <!-- FOTO 23 - COLOQUE O LINK DA FOTO AQUI -->
-            <div class="photo-frame">
-                <img src="https://drive.google.com/thumbnail?sz=w1000&id=1c3nV1hcxW_YGWm2MzuPeifzw0HGD3eVj" onerror="this.style.display='none'; this.parentNode.innerHTML='🥰<br><small>Foto 6</small>';">
-            </div>
-
-            <!-- FOTO 24 - COLOQUE O LINK DA FOTO AQUI -->
-            <div class="photo-frame">
-                <img src="https://drive.google.com/thumbnail?sz=w1000&id=1c9duXOzcff21fgGhL0yESazmxAYIPr6Q" onerror="this.style.display='none'; this.parentNode.innerHTML='🥰<br><small>Foto 6</small>';">
-            </div>
-
-            <!-- FOTO 25 - COLOQUE O LINK DA FOTO AQUI -->
-            <div class="photo-frame">
-                <img src="https://drive.google.com/thumbnail?sz=w1000&id=1EpRIAkHkHio5oSUnLkfeWfwq0UQzdWGE" onerror="this.style.display='none'; this.parentNode.innerHTML='🥰<br><small>Foto 6</small>';">
-            </div>
-
-            <!-- FOTO 26 - COLOQUE O LINK DA FOTO AQUI -->
-            <div class="photo-frame">
-                <img src="https://drive.google.com/thumbnail?sz=w1000&id=1hev9BukVaqZjbycDpeejI2_DuiFKNpzo" onerror="this.style.display='none'; this.parentNode.innerHTML='🥰<br><small>Foto 6</small>';">
-            </div>
-
-            <!-- FOTO 27 - COLOQUE O LINK DA FOTO AQUI -->
-            <div class="photo-frame">
-                <img src="https://drive.google.com/thumbnail?sz=w1000&id=1ddMH70XtehOIxOgS2x4-zeBBCqarPW6C" onerror="this.style.display='none'; this.parentNode.innerHTML='🥰<br><small>Foto 6</small>';">
-            </div>
-
-            <!-- FOTO 28 - COLOQUE O LINK DA FOTO AQUI -->
-            <div class="photo-frame">
-                <img src="https://drive.google.com/thumbnail?sz=w1000&id=1ubw07FdoDZeqpybK_IuYEkV4WZjJ6KvI" onerror="this.style.display='none'; this.parentNode.innerHTML='🥰<br><small>Foto 6</small>';">
-            </div>
-
-            <!-- FOTO 29 - COLOQUE O LINK DA FOTO AQUI -->
-            <div class="photo-frame">
-                <img src="https://drive.google.com/thumbnail?sz=w1000&id=1-0XEaNAkHNMTcfesiNsYF31v-Qw_zZYD" onerror="this.style.display='none'; this.parentNode.innerHTML='🥰<br><small>Foto 6</small>';">
-            </div>
-
-            <!-- FOTO 30 - COLOQUE O LINK DA FOTO AQUI -->
-            <div class="photo-frame">
-                <img src="https://drive.google.com/thumbnail?sz=w1000&id=1e1M0_3ZeFswrhnLaEoYacuSnp4468yig" onerror="this.style.display='none'; this.parentNode.innerHTML='🥰<br><small>Foto 6</small>';">
+            <div class="featured-nav" id="featuredNav">
+                <!-- Os dots de navegação serão inseridos via JavaScript -->
             </div>
         </section>
 
+        <!-- Galeria de fotos original -->
+        <section class="photo-gallery" id="photoGallery">
+            <!-- As fotos serão processadas via JavaScript -->
+        </section>
+
+        <!-- Controles de Música -->
+        <div class="music-controls">
+            <button class="control-btn" onclick="setPlayMode('sequential')" id="btnSequential">
+                ▶️ Reproduzir em Ordem
+            </button>
+            <button class="control-btn" onclick="setPlayMode('random')" id="btnRandom">
+                🔀 Reproduzir Aleatório
+            </button>
+            <button class="control-btn" onclick="stopAllMusic()" id="btnStop">
+                ⏹️ Parar Todas
+            </button>
+            <button class="control-btn" onclick="toggleMuteAll()" id="btnMute">
+                🔇 Silenciar
+            </button>
+        </div>
+
         <!-- Seção de Músicas -->
         <section class="music-section">
-            <h2 class="music-name">CADA BATIDA DO MEU CORAÇÃO, É UMA LINDA MELODIA PARA VOCÊ</h2>
+            <h2 class="music-title">CADA BATIDA DO MEU CORAÇÃO, É UMA LINDA MELODIA PARA VOCÊ</h2>
             
-            <div class="music-player">
-                <div class="music-item">
-                    <img src="https://drive.google.com/thumbnail?sz=w1000&id=1aepg09FGLZX-ARm5kbbcohwCk1PMl55D" class="music-cover" alt="Capa do Álbum">
-                    <div class="music-info">
-                        <div class="music-name">FELIZ ANIVERSÁRIO 1</div>
-                        <div class="music-artist">BERUKO-1</div>
-                        <audio controls>
-                            <source src="https://corsproxy.io/?https://drive.google.com/uc?export=download&id=1WGa4D2myqhdT4rAizqdKGv9kjvLyxA14" type="audio/mpeg">
-                            Seu navegador não suporta o elemento de áudio.
-                        </audio>
-                    </div>
-                </div>
-            </div>
-
-<div class="music-player">
-                <div class="music-item">
-                    <img src="https://drive.google.com/thumbnail?sz=w1000&id=1aOd0gmbhC4ZBLoTWgs8tIcU9V3Tf7KJy" class="music-cover" alt="Capa do Álbum">
-                    <div class="music-info">
-                        <div class="music-name">FELIZ ANIVERSÁRIO 2</div>
-                        <div class="music-artist">BERUKO-2</div>
-                        <audio controls>
-                            <source src="https://corsproxy.io/?https://drive.google.com/uc?export=download&id=1PVZ-E7dwYTcH6M9Qa-t5bKBoP1AqwLs-" type="audio/mpeg">
-                            Seu navegador não suporta o elemento de áudio.
-                        </audio>
-                    </div>
-                </div>
-            </div>
-
-<div class="music-player">
-                <div class="music-item">
-                    <img src="https://drive.google.com/thumbnail?sz=w1000&id=1aoYsln2mk3BDu6vkzW6ciZIubALFiQZi" class="music-cover" alt="Capa do Álbum">
-                    <div class="music-info">
-                        <div class="music-name">FELIZ ANIVERSÁRIO 3</div>
-                        <div class="music-artist">BERUKO-3</div>
-                        <audio controls>
-                            <source src="https://corsproxy.io/?https://drive.google.com/uc?export=download&id=1D8DMBgVT04eUTkt0cUQ488DpgOb0GIGB" type="audio/mpeg">
-                            Seu navegador não suporta o elemento de áudio.
-                        </audio>
-                    </div>
-                </div>
-            </div>
-
-<div class="music-player">
-                <div class="music-item">
-                    <img src="https://drive.google.com/thumbnail?sz=w1000&id=1amDPxfdZLWTYRMIG2BbiQ2ddOIam3aki" class="music-cover" alt="Capa do Álbum">
-                    <div class="music-info">
-                        <div class="music-name">FELIZ ANIVERSÁRIO 4</div>
-                        <div class="music-artist">BERUKO-4</div>
-                        <audio controls>
-                            <source src="https://corsproxy.io/?https://drive.google.com/uc?export=download&id=1GbaoHcfJBSyNDBAHwRemCrnHVUeE99no" type="audio/mpeg">
-                            Seu navegador não suporta o elemento de áudio.
-                        </audio>
-                    </div>
-                </div>
-            </div>
-
-<div class="music-player">
-                <div class="music-item">
-                    <img src="https://drive.google.com/thumbnail?sz=w1000&id=1ajLPSiswSlif7OmpG6vGPlACPBvL0mEF" class="music-cover" alt="Capa do Álbum">
-                    <div class="music-info">
-                        <div class="music-name">FELIZ ANIVERSÁRIO 5</div>
-                        <div class="music-artist">BERUKO-5</div>
-                        <audio controls>
-                            <source src="https://corsproxy.io/?https://drive.google.com/uc?export=download&id=1JnE8lLTPcde9iSgu07-nih4yxER8eJK7" type="audio/mpeg">
-                            Seu navegador não suporta o elemento de áudio.
-                        </audio>
-                    </div>
-                </div>
-            </div>
-
-<div class="music-player">
-                <div class="music-item">
-                    <img src="https://drive.google.com/thumbnail?sz=w1000&id=1af8waelS3-8PLTQROuGAcbYuNeUdivbQ" class="music-cover" alt="Capa do Álbum">
-                    <div class="music-info">
-                        <div class="music-name">AMOR PARA SEMPRE 1</div>
-                        <div class="music-artist">BERUKO-6</div>
-                        <audio controls>
-                            <source src="https://corsproxy.io/?https://drive.google.com/uc?export=download&id=17J_1CJ8Qpgeq3ejTEet52vdqltQuD3lF" type="audio/mpeg">
-                            Seu navegador não suporta o elemento de áudio.
-                        </audio>
-                    </div>
-                </div>
-            </div>
-
-<div class="music-player">
-                <div class="music-item">
-                    <img src="https://drive.google.com/thumbnail?sz=w1000&id=1aepg09FGLZX-ARm5kbbcohwCk1PMl55D" class="music-cover" alt="Capa do Álbum">
-                    <div class="music-info">
-                        <div class="music-name">AMO VOCÊ DEMAIS-1</div>
-                        <div class="music-artist">BERUKO-7</div>
-                        <audio controls>
-                            <source src="https://corsproxy.io/?https://drive.google.com/uc?export=download&id=10DqHxKpqyaJWJh1TC2Pnp7x0hS_cyVC9" type="audio/mpeg">
-                            Seu navegador não suporta o elemento de áudio.
-                        </audio>
-                    </div>
-                </div>
-            </div>
-
-<div class="music-player">
-                <div class="music-item">
-                    <img src="https://drive.google.com/thumbnail?sz=w1000&id=1aOd0gmbhC4ZBLoTWgs8tIcU9V3Tf7KJy" class="music-cover" alt="Capa do Álbum">
-                    <div class="music-info">
-                        <div class="music-name">AMO VOCÊ DEMAIS-2</div>
-                        <div class="music-artist">BERUKO-8</div>
-                        <audio controls>
-                            <source src="https://corsproxy.io/?https://drive.google.com/uc?export=download&id=1DRlzS8TZUYAxwlmS-5BKdHnjGCVo0fH1" type="audio/mpeg">
-                            Seu navegador não suporta o elemento de áudio.
-                        </audio>
-                    </div>
-                </div>
-            </div>
-
-<div class="music-player">
-                <div class="music-item">
-                    <img src="https://drive.google.com/thumbnail?sz=w1000&id=1aoYsln2mk3BDu6vkzW6ciZIubALFiQZi" class="music-cover" alt="Capa do Álbum">
-                    <div class="music-info">
-                        <div class="music-name">BERUKA-MEU AMOR VERDADEIRO</div>
-                        <div class="music-artist">BERUKO-9</div>
-                        <audio controls>
-                            <source src="https://corsproxy.io/?https://drive.google.com/uc?export=download&id=1OrAEBGUSRTakIIZ19Ek_Ng0iiAUfDgUz" type="audio/mpeg">
-                            Seu navegador não suporta o elemento de áudio.
-                        </audio>
-                    </div>
-                </div>
-            </div>
-
-<div class="music-player">
-                <div class="music-item">
-                    <img src="https://drive.google.com/thumbnail?sz=w1000&id=1amDPxfdZLWTYRMIG2BbiQ2ddOIam3aki" class="music-cover" alt="Capa do Álbum">
-                    <div class="music-info">
-                        <div class="music-name">BERUKINHA MEU AMOR-1</div>
-                        <div class="music-artist">BERUKO-10</div>
-                        <audio controls>
-                            <source src="https://corsproxy.io/?https://drive.google.com/uc?export=download&id=1QJqjF8SAomzee8G9laYFpHT7L-fNmWMH" type="audio/mpeg">
-                            Seu navegador não suporta o elemento de áudio.
-                        </audio>
-                    </div>
-                </div>
-            </div>
-
-<div class="music-player">
-                <div class="music-item">
-                    <img src="https://drive.google.com/thumbnail?sz=w1000&id=1ajLPSiswSlif7OmpG6vGPlACPBvL0mEF" class="music-cover" alt="Capa do Álbum">
-                    <div class="music-info">
-                        <div class="music-name">BERUKINHA MEU AMOR-2</div>
-                        <div class="music-artist">BERUKO-11</div>
-                        <audio controls>
-                            <source src="https://corsproxy.io/?https://drive.google.com/uc?export=download&id=1Z6Vm1j27ZY1bi7kqJ28IUTwVoSxzN0EJ" type="audio/mpeg">
-                            Seu navegador não suporta o elemento de áudio.
-                        </audio>
-                    </div>
-                </div>
-            </div>
-
-<div class="music-player">
-                <div class="music-item">
-                    <img src="https://drive.google.com/thumbnail?sz=w1000&id=1aepg09FGLZX-ARm5kbbcohwCk1PMl55D" class="music-cover" alt="Capa do Álbum">
-                    <div class="music-info">
-                        <div class="music-name">BERUKINHA MEU AMOR-4</div>
-                        <div class="music-artist">BERUKO-12</div>
-                        <audio controls>
-                            <source src="https://corsproxy.io/?https://drive.google.com/uc?export=download&id=15Zypfg10FZJ4joLy2bGEl_94zl-2QPyw" type="audio/mpeg">
-                            Seu navegador não suporta o elemento de áudio.
-                        </audio>
-                    </div>
-                </div>
-            </div>
-
-<div class="music-player">
-                <div class="music-item">
-                    <img src="https://drive.google.com/thumbnail?sz=w1000&id=1aOd0gmbhC4ZBLoTWgs8tIcU9V3Tf7KJy" class="music-cover" alt="Capa do Álbum">
-                    <div class="music-info">
-                        <div class="music-name">BERUKINHA MEU AMOR-5</div>
-                        <div class="music-artist">BERUKO-13</div>
-                        <audio controls>
-                            <source src="https://corsproxy.io/?https://drive.google.com/uc?export=download&id=1fmTeNlQ8iaBlL_UoqZ6Py8r6B9QPtBnx" type="audio/mpeg">
-                            Seu navegador não suporta o elemento de áudio.
-                        </audio>
-                    </div>
-                </div>
-            </div>
-
-<div class="music-player">
-                <div class="music-item">
-                    <img src="https://drive.google.com/thumbnail?sz=w1000&id=1aoYsln2mk3BDu6vkzW6ciZIubALFiQZi" class="music-cover" alt="Capa do Álbum">
-                    <div class="music-info">
-                        <div class="music-name">BERUKA PODEROSA-1</div>
-                        <div class="music-artist">BERUKO-14</div>
-                        <audio controls>
-                            <source src="https://corsproxy.io/?https://drive.google.com/uc?export=download&id=1acetRl6Cyn6U6PEeiBNlOxbniMXhgFVh" type="audio/mpeg">
-                            Seu navegador não suporta o elemento de áudio.
-                        </audio>
-                    </div>
-                </div>
-            </div>
-
-<div class="music-player">
-                <div class="music-item">
-                    <img src="https://drive.google.com/thumbnail?sz=w1000&id=1amDPxfdZLWTYRMIG2BbiQ2ddOIam3aki" class="music-cover" alt="Capa do Álbum">
-                    <div class="music-info">
-                        <div class="music-name">BERUKA PODEROSA-2</div>
-                        <div class="music-artist">BERUKO-15</div>
-                        <audio controls>
-                            <source src="https://corsproxy.io/?https://drive.google.com/uc?export=download&id=19mkfdENYvY-uYMmX8rBznhUVZorUOBQe" type="audio/mpeg">
-                            Seu navegador não suporta o elemento de áudio.
-                        </audio>
-                    </div>
-                </div>
-            </div>
-
-<div class="music-player">
-                <div class="music-item">
-                    <img src="https://drive.google.com/thumbnail?sz=w1000&id=1af8waelS3-8PLTQROuGAcbYuNeUdivbQ" class="music-cover" alt="Capa do Álbum">
-                    <div class="music-info">
-                        <div class="music-name">AMO VOCÊ DEMAIS-4</div>
-                        <div class="music-artist">BERUKO-16</div>
-                        <audio controls>
-                            <source src="https://corsproxy.io/?https://drive.google.com/uc?export=download&id=1natplbC94RFKMCafa2BCLC3GS5tJGWc4" type="audio/mpeg">
-                            Seu navegador não suporta o elemento de áudio.
-                        </audio>
-                    </div>
-                </div>
-            </div>
-
-<div class="music-player">
-                <div class="music-item">
-                    <img src="https://drive.google.com/thumbnail?sz=w1000&id=1aepg09FGLZX-ARm5kbbcohwCk1PMl55D" class="music-cover" alt="Capa do Álbum">
-                    <div class="music-info">
-                        <div class="music-name">BERUKA, I LOVE YOU-1</div>
-                        <div class="music-artist">BERUKO-17</div>
-                        <audio controls>
-                            <source src="https://corsproxy.io/?https://drive.google.com/uc?export=download&id=1KNDrS2yUN4mVxWWmPx2OgBwQY8f9DMuH" type="audio/mpeg">
-                            Seu navegador não suporta o elemento de áudio.
-                        </audio>
-                    </div>
-                </div>
-            </div>
-
-<div class="music-player">
-                <div class="music-item">
-                    <img src="https://drive.google.com/thumbnail?sz=w1000&id=1aOd0gmbhC4ZBLoTWgs8tIcU9V3Tf7KJy" class="music-cover" alt="Capa do Álbum">
-                    <div class="music-info">
-                        <div class="music-name">BERUKA, I LOVE YOU-2</div>
-                        <div class="music-artist">BERUKO-18</div>
-                        <audio controls>
-                            <source src="https://corsproxy.io/?https://drive.google.com/uc?export=download&id=1gjJp9dNYmGEA2iqroxiYeGZS963dUMbT" type="audio/mpeg">
-                            Seu navegador não suporta o elemento de áudio.
-                        </audio>
-                    </div>
-                </div>
-            </div>
-<div class="music-player">
-                <div class="music-item">
-                    <img src="https://drive.google.com/thumbnail?sz=w1000&id=1aoYsln2mk3BDu6vkzW6ciZIubALFiQZi" class="music-cover" alt="Capa do Álbum">
-                    <div class="music-info">
-                        <div class="music-name">BERUKA- MEU PORTO SEGURO-1</div>
-                        <div class="music-artist">BERUKO-19</div>
-                        <audio controls>
-                            <source src="https://corsproxy.io/?https://drive.google.com/uc?export=download&id=1Fqh8FMUSY84UGzoxEPZ9DkPr35GdTCcP" type="audio/mpeg">
-                            Seu navegador não suporta o elemento de áudio.
-                        </audio>
-                    </div>
-                </div>
-            </div>
-
-<div class="music-player">
-                <div class="music-item">
-                    <img src="https://drive.google.com/thumbnail?sz=w1000&id=1amDPxfdZLWTYRMIG2BbiQ2ddOIam3aki" class="music-cover" alt="Capa do Álbum">
-                    <div class="music-info">
-                        <div class="music-name">BERUKA- MEU PORTO SEGURO-2</div>
-                        <div class="music-artist">BERUKO-20</div>
-                        <audio controls>
-                            <source src="https://corsproxy.io/?https://drive.google.com/uc?export=download&id=1Oy6tl3e1ob1JcgbNNQS91WyEO0_oAOlm" type="audio/mpeg">
-                            Seu navegador não suporta o elemento de áudio.
-                        </audio>
-                    </div>
-                </div>
-            </div>
-
-<div class="music-player">
-                <div class="music-item">
-                    <img src="https://drive.google.com/thumbnail?sz=w1000&id=1ajLPSiswSlif7OmpG6vGPlACPBvL0mEF" class="music-cover" alt="Capa do Álbum">
-                    <div class="music-info">
-                        <div class="music-name">BERUKA- MEU PORTO SEGURO-3</div>
-                        <div class="music-artist">BERUKO-21</div>
-                        <audio controls>
-                            <source src="https://corsproxy.io/?https://drive.google.com/uc?export=download&id=1qF2BsMpcxRLV5zE5xOozixXfhRGJWqO6" type="audio/mpeg">
-                            Seu navegador não suporta o elemento de áudio.
-                        </audio>
-                    </div>
-                </div>
-            </div>
-
-<div class="music-player">
-                <div class="music-item">
-                    <img src="https://drive.google.com/thumbnail?sz=w1000&id=1af8waelS3-8PLTQROuGAcbYuNeUdivbQ" class="music-cover" alt="Capa do Álbum">
-                    <div class="music-info">
-                        <div class="music-name">🎵 BERUKA, MEU LUGAR</div>
-                        <div class="music-artist">BERUKO-22</div>
-                        <audio controls>
-                            <source src="https://corsproxy.io/?https://drive.google.com/uc?export=download&id=1gUvgTpCbIULp90Q9VaAywpUf6i-kp4qF" type="audio/mpeg">
-                            Seu navegador não suporta o elemento de áudio.
-                        </audio>
-                    </div>
-                </div>
-            </div>
-
-<div class="music-player">
-                <div class="music-item">
-                    <img src="https://drive.google.com/thumbnail?sz=w1000&id=1aepg09FGLZX-ARm5kbbcohwCk1PMl55D" class="music-cover" alt="Capa do Álbum">
-                    <div class="music-info">
-                        <div class="music-name">BERUKA- MINHA HISTORIA MAIS LINDA-1</div>
-                        <div class="music-artist">BERUKO-23</div>
-                        <audio controls>
-                            <source src="https://corsproxy.io/?https://drive.google.com/uc?export=download&id=17Dvc8n3C-HpXUkHiY7FpJtgcLQ-nAWEn" type="audio/mpeg">
-                            Seu navegador não suporta o elemento de áudio.
-                        </audio>
-                    </div>
-                </div>
-            </div>
-
-<div class="music-player">
-                <div class="music-item">
-                    <img src="https://drive.google.com/thumbnail?sz=w1000&id=1aOd0gmbhC4ZBLoTWgs8tIcU9V3Tf7KJy" class="music-cover" alt="Capa do Álbum">
-                    <div class="music-info">
-                        <div class="music-name">BERUKA- MINHA HISTORIA MAIS LINDA-2</div>
-                        <div class="music-artist">BERUKO-24</div>
-                        <audio controls>
-                            <source src="https://corsproxy.io/?https://drive.google.com/uc?export=download&id=1cb2FIWVF0QpYC0So12CFtZ752qTQRWvv" type="audio/mpeg">
-                            Seu navegador não suporta o elemento de áudio.
-                        </audio>
-                    </div>
-                </div>
-            </div>
-
-<div class="music-player">
-                <div class="music-item">
-                    <img src="https://drive.google.com/thumbnail?sz=w1000&id=1aoYsln2mk3BDu6vkzW6ciZIubALFiQZi" class="music-cover" alt="Capa do Álbum">
-                    <div class="music-info">
-                        <div class="music-name">BERUKA- MINHA HISTORIA MAIS LINDA-3</div>
-                        <div class="music-artist">BERUKO-25</div>
-                        <audio controls>
-                            <source src="https://corsproxy.io/?https://drive.google.com/uc?export=download&id=1U02xnxlY5jN_XvQm6edE6llUR8l-hcXq" type="audio/mpeg">
-                            Seu navegador não suporta o elemento de áudio.
-                        </audio>
-                    </div>
-                </div>
-            </div>
-
-<div class="music-player">
-                <div class="music-item">
-                    <img src="https://drive.google.com/thumbnail?sz=w1000&id=1amDPxfdZLWTYRMIG2BbiQ2ddOIam3aki" class="music-cover" alt="Capa do Álbum">
-                    <div class="music-info">
-                        <div class="music-name">AMOR PARA SEMPRE-2</div>
-                        <div class="music-artist">BERUKO-26</div>
-                        <audio controls>
-                            <source src="https://corsproxy.io/?https://drive.google.com/uc?export=download&id=1SWyKLWNbgMnmgjU1ay8mzPzULgQ8s7C2" type="audio/mpeg">
-                            Seu navegador não suporta o elemento de áudio.
-                        </audio>
-                    </div>
-                </div>
-            </div>
-
-<div class="music-player">
-                <div class="music-item">
-                    <img src="https://drive.google.com/thumbnail?sz=w1000&id=1ajLPSiswSlif7OmpG6vGPlACPBvL0mEF" class="music-cover" alt="Capa do Álbum">
-                    <div class="music-info">
-                        <div class="music-name">BERUKA- MINHA HISTORIA MAIS LINDA-4</div>
-                        <div class="music-artist">BERUKO-27</div>
-                        <audio controls>
-                            <source src="https://corsproxy.io/?https://drive.google.com/uc?export=download&id=18dE5fzqK85sxY3yTAxFBfrPI81hWDv54" type="audio/mpeg">
-                            Seu navegador não suporta o elemento de áudio.
-                        </audio>
-                    </div>
-                </div>
-            </div>
-
-<div class="music-player">
-                <div class="music-item">
-                    <img src="https://drive.google.com/thumbnail?sz=w1000&id=1af8waelS3-8PLTQROuGAcbYuNeUdivbQ" class="music-cover" alt="Capa do Álbum">
-                    <div class="music-info">
-                        <div class="music-name">BERUKA- MINHA HISTORIA MAIS LINDA-5</div>
-                        <div class="music-artist">BERUKO-28</div>
-                        <audio controls>
-                            <source src="https://corsproxy.io/?https://drive.google.com/uc?export=download&id=1JC-THBri5XmW8kE8jUsq0gj2umslzexF" type="audio/mpeg">
-                            Seu navegador não suporta o elemento de áudio.
-                        </audio>
-                    </div>
-                </div>
-            </div>
-
-<div class="music-player">
-                <div class="music-item">
-                    <img src="https://drive.google.com/thumbnail?sz=w1000&id=1aepg09FGLZX-ARm5kbbcohwCk1PMl55D" class="music-cover" alt="Capa do Álbum">
-                    <div class="music-info">
-                        <div class="music-name">BERUKA- MINHA HISTORIA MAIS LINDA-6</div>
-                        <div class="music-artist">BERUKO-29</div>
-                        <audio controls>
-                            <source src="https://corsproxy.io/?https://drive.google.com/uc?export=download&id=1K2pZ-qC0NyXHHFM7y2NR1qXlMXngL4Kd" type="audio/mpeg">
-                            Seu navegador não suporta o elemento de áudio.
-                        </audio>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Adicione mais músicas conforme necessário -->
+            <!-- Os players de música serão inseridos via JavaScript -->
         </section>
 
         <footer class="footer">
@@ -1490,39 +1074,478 @@
     </div>
 
     <script>
-        // Adiciona classe loaded ao body quando a página carrega
+        // ===== SISTEMA DE MÚSICAS AVANÇADO =====
+        let currentAudio = null;
+        let currentPlayMode = null;
+        let isMuted = false;
+        let musicPlayers = [];
+        let currentAudioIndex = 0;
+
+        // CONFIGURAÇÃO COMPLETA DAS MÚSICAS - TODOS OS LINKS DO SEU CÓDIGO
+        const musicConfig = [
+            {
+                id: 1,
+                name: "FELIZ ANIVERSÁRIO 1",
+                artist: "BERUKO-1",
+                cover: "https://drive.google.com/thumbnail?sz=w1000&id=1aepg09FGLZX-ARm5kbbcohwCk1PMl55D",
+                src: "https://corsproxy.io/?https://drive.google.com/uc?export=download&id=1WGa4D2myqhdT4rAizqdKGv9kjvLyxA14"
+            },
+            {
+                id: 2,
+                name: "FELIZ ANIVERSÁRIO 2",
+                artist: "BERUKO-2",
+                cover: "https://drive.google.com/thumbnail?sz=w1000&id=1aOd0gmbhC4ZBLoTWgs8tIcU9V3Tf7KJy",
+                src: "https://corsproxy.io/?https://drive.google.com/uc?export=download&id=1PVZ-E7dwYTcH6M9Qa-t5bKBoP1AqwLs-"
+            },
+            {
+                id: 3,
+                name: "FELIZ ANIVERSÁRIO 3",
+                artist: "BERUKO-3",
+                cover: "https://drive.google.com/thumbnail?sz=w1000&id=1aoYsln2mk3BDu6vkzW6ciZIubALFiQZi",
+                src: "https://corsproxy.io/?https://drive.google.com/uc?export=download&id=1D8DMBgVT04eUTkt0cUQ488DpgOb0GIGB"
+            },
+            {
+                id: 4,
+                name: "FELIZ ANIVERSÁRIO 4",
+                artist: "BERUKO-4",
+                cover: "https://drive.google.com/thumbnail?sz=w1000&id=1amDPxfdZLWTYRMIG2BbiQ2ddOIam3aki",
+                src: "https://corsproxy.io/?https://drive.google.com/uc?export=download&id=1GbaoHcfJBSyNDBAHwRemCrnHVUeE99no"
+            },
+            {
+                id: 5,
+                name: "FELIZ ANIVERSÁRIO 5",
+                artist: "BERUKO-5",
+                cover: "https://drive.google.com/thumbnail?sz=w1000&id=1ajLPSiswSlif7OmpG6vGPlACPBvL0mEF",
+                src: "https://corsproxy.io/?https://drive.google.com/uc?export=download&id=1JnE8lLTPcde9iSgu07-nih4yxER8eJK7"
+            },
+            {
+                id: 6,
+                name: "AMOR PARA SEMPRE 1",
+                artist: "BERUKO-6",
+                cover: "https://drive.google.com/thumbnail?sz=w1000&id=1af8waelS3-8PLTQROuGAcbYuNeUdivbQ",
+                src: "https://corsproxy.io/?https://drive.google.com/uc?export=download&id=17J_1CJ8Qpgeq3ejTEet52vdqltQuD3lF"
+            },
+            {
+                id: 7,
+                name: "AMO VOCÊ DEMAIS-1",
+                artist: "BERUKO-7",
+                cover: "https://drive.google.com/thumbnail?sz=w1000&id=1aepg09FGLZX-ARm5kbbcohwCk1PMl55D",
+                src: "https://corsproxy.io/?https://drive.google.com/uc?export=download&id=10DqHxKpqyaJWJh1TC2Pnp7x0hS_cyVC9"
+            },
+            {
+                id: 8,
+                name: "AMO VOCÊ DEMAIS-2",
+                artist: "BERUKO-8",
+                cover: "https://drive.google.com/thumbnail?sz=w1000&id=1aOd0gmbhC4ZBLoTWgs8tIcU9V3Tf7KJy",
+                src: "https://corsproxy.io/?https://drive.google.com/uc?export=download&id=1DRlzS8TZUYAxwlmS-5BKdHnjGCVo0fH1"
+            },
+            {
+                id: 9,
+                name: "BERUKA-MEU AMOR VERDADEIRO",
+                artist: "BERUKO-9",
+                cover: "https://drive.google.com/thumbnail?sz=w1000&id=1aoYsln2mk3BDu6vkzW6ciZIubALFiQZi",
+                src: "https://corsproxy.io/?https://drive.google.com/uc?export=download&id=1OrAEBGUSRTakIIZ19Ek_Ng0iiAUfDgUz"
+            },
+            {
+                id: 10,
+                name: "BERUKINHA MEU AMOR-1",
+                artist: "BERUKO-10",
+                cover: "https://drive.google.com/thumbnail?sz=w1000&id=1amDPxfdZLWTYRMIG2BbiQ2ddOIam3aki",
+                src: "https://corsproxy.io/?https://drive.google.com/uc?export=download&id=1QJqjF8SAomzee8G9laYFpHT7L-fNmWMH"
+            },
+            {
+                id: 11,
+                name: "BERUKINHA MEU AMOR-2",
+                artist: "BERUKO-11",
+                cover: "https://drive.google.com/thumbnail?sz=w1000&id=1ajLPSiswSlif7OmpG6vGPlACPBvL0mEF",
+                src: "https://corsproxy.io/?https://drive.google.com/uc?export=download&id=1Z6Vm1j27ZY1bi7kqJ28IUTwVoSxzN0EJ"
+            },
+            {
+                id: 12,
+                name: "BERUKINHA MEU AMOR-4",
+                artist: "BERUKO-12",
+                cover: "https://drive.google.com/thumbnail?sz=w1000&id=1aepg09FGLZX-ARm5kbbcohwCk1PMl55D",
+                src: "https://corsproxy.io/?https://drive.google.com/uc?export=download&id=15Zypfg10FZJ4joLy2bGEl_94zl-2QPyw"
+            },
+            {
+                id: 13,
+                name: "BERUKINHA MEU AMOR-5",
+                artist: "BERUKO-13",
+                cover: "https://drive.google.com/thumbnail?sz=w1000&id=1aOd0gmbhC4ZBLoTWgs8tIcU9V3Tf7KJy",
+                src: "https://corsproxy.io/?https://drive.google.com/uc?export=download&id=1fmTeNlQ8iaBlL_UoqZ6Py8r6B9QPtBnx"
+            },
+            {
+                id: 14,
+                name: "BERUKA PODEROSA-1",
+                artist: "BERUKO-14",
+                cover: "https://drive.google.com/thumbnail?sz=w1000&id=1aoYsln2mk3BDu6vkzW6ciZIubALFiQZi",
+                src: "https://corsproxy.io/?https://drive.google.com/uc?export=download&id=1acetRl6Cyn6U6PEeiBNlOxbniMXhgFVh"
+            },
+            {
+                id: 15,
+                name: "BERUKA PODEROSA-2",
+                artist: "BERUKO-15",
+                cover: "https://drive.google.com/thumbnail?sz=w1000&id=1amDPxfdZLWTYRMIG2BbiQ2ddOIam3aki",
+                src: "https://corsproxy.io/?https://drive.google.com/uc?export=download&id=19mkfdENYvY-uYMmX8rBznhUVZorUOBQe"
+            },
+            {
+                id: 16,
+                name: "AMO VOCÊ DEMAIS-4",
+                artist: "BERUKO-16",
+                cover: "https://drive.google.com/thumbnail?sz=w1000&id=1af8waelS3-8PLTQROuGAcbYuNeUdivbQ",
+                src: "https://corsproxy.io/?https://drive.google.com/uc?export=download&id=1natplbC94RFKMCafa2BCLC3GS5tJGWc4"
+            },
+            {
+                id: 17,
+                name: "BERUKA, I LOVE YOU-1",
+                artist: "BERUKO-17",
+                cover: "https://drive.google.com/thumbnail?sz=w1000&id=1aepg09FGLZX-ARm5kbbcohwCk1PMl55D",
+                src: "https://corsproxy.io/?https://drive.google.com/uc?export=download&id=1KNDrS2yUN4mVxWWmPx2OgBwQY8f9DMuH"
+            },
+            {
+                id: 18,
+                name: "BERUKA, I LOVE YOU-2",
+                artist: "BERUKO-18",
+                cover: "https://drive.google.com/thumbnail?sz=w1000&id=1aOd0gmbhC4ZBLoTWgs8tIcU9V3Tf7KJy",
+                src: "https://corsproxy.io/?https://drive.google.com/uc?export=download&id=1gjJp9dNYmGEA2iqroxiYeGZS963dUMbT"
+            },
+            {
+                id: 19,
+                name: "BERUKA- MEU PORTO SEGURO-1",
+                artist: "BERUKO-19",
+                cover: "https://drive.google.com/thumbnail?sz=w1000&id=1aoYsln2mk3BDu6vkzW6ciZIubALFiQZi",
+                src: "https://corsproxy.io/?https://drive.google.com/uc?export=download&id=1Fqh8FMUSY84UGzoxEPZ9DkPr35GdTCcP"
+            },
+            {
+                id: 20,
+                name: "BERUKA- MEU PORTO SEGURO-2",
+                artist: "BERUKO-20",
+                cover: "https://drive.google.com/thumbnail?sz=w1000&id=1amDPxfdZLWTYRMIG2BbiQ2ddOIam3aki",
+                src: "https://corsproxy.io/?https://drive.google.com/uc?export=download&id=1Oy6tl3e1ob1JcgbNNQS91WyEO0_oAOlm"
+            },
+            {
+                id: 21,
+                name: "BERUKA- MEU PORTO SEGURO-3",
+                artist: "BERUKO-21",
+                cover: "https://drive.google.com/thumbnail?sz=w1000&id=1ajLPSiswSlif7OmpG6vGPlACPBvL0mEF",
+                src: "https://corsproxy.io/?https://drive.google.com/uc?export=download&id=1qF2BsMpcxRLV5zE5xOozixXfhRGJWqO6"
+            },
+            {
+                id: 22,
+                name: "🎵 BERUKA, MEU LUGAR",
+                artist: "BERUKO-22",
+                cover: "https://drive.google.com/thumbnail?sz=w1000&id=1af8waelS3-8PLTQROuGAcbYuNeUdivbQ",
+                src: "https://corsproxy.io/?https://drive.google.com/uc?export=download&id=1gUvgTpCbIULp90Q9VaAywpUf6i-kp4qF"
+            },
+            {
+                id: 23,
+                name: "BERUKA- MINHA HISTORIA MAIS LINDA-1",
+                artist: "BERUKO-23",
+                cover: "https://drive.google.com/thumbnail?sz=w1000&id=1aepg09FGLZX-ARm5kbbcohwCk1PMl55D",
+                src: "https://corsproxy.io/?https://drive.google.com/uc?export=download&id=17Dvc8n3C-HpXUkHiY7FpJtgcLQ-nAWEn"
+            },
+            {
+                id: 24,
+                name: "BERUKA- MINHA HISTORIA MAIS LINDA-2",
+                artist: "BERUKO-24",
+                cover: "https://drive.google.com/thumbnail?sz=w1000&id=1aOd0gmbhC4ZBLoTWgs8tIcU9V3Tf7KJy",
+                src: "https://corsproxy.io/?https://drive.google.com/uc?export=download&id=1cb2FIWVF0QpYC0So12CFtZ752qTQRWvv"
+            },
+            {
+                id: 25,
+                name: "BERUKA- MINHA HISTORIA MAIS LINDA-3",
+                artist: "BERUKO-25",
+                cover: "https://drive.google.com/thumbnail?sz=w1000&id=1aoYsln2mk3BDu6vkzW6ciZIubALFiQZi",
+                src: "https://corsproxy.io/?https://drive.google.com/uc?export=download&id=1U02xnxlY5jN_XvQm6edE6llUR8l-hcXq"
+            },
+            {
+                id: 26,
+                name: "AMOR PARA SEMPRE-2",
+                artist: "BERUKO-26",
+                cover: "https://drive.google.com/thumbnail?sz=w1000&id=1amDPxfdZLWTYRMIG2BbiQ2ddOIam3aki",
+                src: "https://corsproxy.io/?https://drive.google.com/uc?export=download&id=1SWyKLWNbgMnmgjU1ay8mzPzULgQ8s7C2"
+            },
+            {
+                id: 27,
+                name: "BERUKA- MINHA HISTORIA MAIS LINDA-4",
+                artist: "BERUKO-27",
+                cover: "https://drive.google.com/thumbnail?sz=w1000&id=1ajLPSiswSlif7OmpG6vGPlACPBvL0mEF",
+                src: "https://corsproxy.io/?https://drive.google.com/uc?export=download&id=18dE5fzqK85sxY3yTAxFBfrPI81hWDv54"
+            },
+            {
+                id: 28,
+                name: "BERUKA- MINHA HISTORIA MAIS LINDA-5",
+                artist: "BERUKO-28",
+                cover: "https://drive.google.com/thumbnail?sz=w1000&id=1af8waelS3-8PLTQROuGAcbYuNeUdivbQ",
+                src: "https://corsproxy.io/?https://drive.google.com/uc?export=download&id=1JC-THBri5XmW8kE8jUsq0gj2umslzexF"
+            },
+            {
+                id: 29,
+                name: "BERUKA- MINHA HISTORIA MAIS LINDA-6",
+                artist: "BERUKO-29",
+                cover: "https://drive.google.com/thumbnail?sz=w1000&id=1aepg09FGLZX-ARm5kbbcohwCk1PMl55D",
+                src: "https://corsproxy.io/?https://drive.google.com/uc?export=download&id=1K2pZ-qC0NyXHHFM7y2NR1qXlMXngL4Kd"
+            }
+        ];
+
+        // ===== SISTEMA DE FOTOS - TODAS AS FOTOS DO SEU CÓDIGO =====
+        const allPhotos = [
+            "https://drive.google.com/thumbnail?sz=w1000&id=1ggIbUEX3UKXjfBGLSTEVpEIDHrmGPNYR",
+            "https://drive.google.com/thumbnail?sz=w1000&id=1bKApvK61C2__XWYSCzMJG0JnAEt_grCg",
+            "https://drive.google.com/thumbnail?sz=w1000&id=1b0xb8bOacg_xCzPJcEMUX5ngzBU93Uvd",
+            "https://drive.google.com/thumbnail?sz=w1000&id=1_enURdtUMI_XXWXasbL5zkIbxgRyXeM9",
+            "https://drive.google.com/thumbnail?sz=w1000&id=1_eSaWLuLT090dxSlSI-1FFqFQepSDwhh",
+            "https://drive.google.com/thumbnail?sz=w1000&id=1_cTd8a1QA3vghnwJ4DzPBUN-KB4tsA8Z",
+            "https://drive.google.com/thumbnail?sz=w1000&id=1JNHqIWNYXtmaHn9ns5P6Ny7KNJxIBlZa",
+            "https://drive.google.com/thumbnail?sz=w1000&id=1aCwSVFvR_PUGDqwXYPZuIIfuiYfQFrTu",
+            "https://drive.google.com/thumbnail?sz=w1000&id=1bE-5TeKu2jEa9bxJy2xvrwp1sOpIK-FR",
+            "https://drive.google.com/thumbnail?sz=w1000&id=1aBVEBxpPZQ9Ut8PSynVcov3XQ8Nn2UoV",
+            "https://drive.google.com/thumbnail?sz=w1000&id=1bCTXbM5llTueeK-lZfW7z_h12Lgk7ww6",
+            "https://drive.google.com/thumbnail?sz=w1000&id=1bAIeM1wnr5YPkeHYVPSiMubsGMQpQ3-2",
+            "https://drive.google.com/thumbnail?sz=w1000&id=1b2opPj5p4IByF9MLM7kKhzXYulgkwB6q",
+            "https://drive.google.com/thumbnail?sz=w1000&id=1bQGBr2k44IEWImy3J-1l2MgqCmd_YmrY",
+            "https://drive.google.com/thumbnail?sz=w1000&id=1bRaUT9LCTpRSar5EoumM5Ui0ypD6dL3A",
+            "https://drive.google.com/thumbnail?sz=w1000&id=1bueEnxAEl2_Op_oUTAUtH8gPnV6NWxaQ",
+            "https://drive.google.com/thumbnail?sz=w1000&id=1bkzKQgKaHkDJDkL_0z-yJSDOy0tsJIgI",
+            "https://drive.google.com/thumbnail?sz=w1000&id=1bePA-ctgGcAFl-l3moGEX8pbPj2p-YvZ",
+            "https://drive.google.com/thumbnail?sz=w1000&id=1cAiKIyd63CkAGUjRbWDFjJyGYrF40Dmj",
+            "https://drive.google.com/thumbnail?sz=w1000&id=1cCFll07FKV4py1VRtNoyqJbBXRuHKoSB",
+            "https://drive.google.com/thumbnail?sz=w1000&id=1cCvMYipf-UjNugOD-TdoC69TPETdOg0O",
+            "https://drive.google.com/thumbnail?sz=w1000&id=1cEATR5SwjeKm243YXcNpe3yzxX0epGaX",
+            "https://drive.google.com/thumbnail?sz=w1000&id=1c3nV1hcxW_YGWm2MzuPeifzw0HGD3eVj",
+            "https://drive.google.com/thumbnail?sz=w1000&id=1c9duXOzcff21fgGhL0yESazmxAYIPr6Q",
+            "https://drive.google.com/thumbnail?sz=w1000&id=1EpRIAkHkHio5oSUnLkfeWfwq0UQzdWGE",
+            "https://drive.google.com/thumbnail?sz=w1000&id=1hev9BukVaqZjbycDpeejI2_DuiFKNpzo",
+            "https://drive.google.com/thumbnail?sz=w1000&id=1ddMH70XtehOIxOgS2x4-zeBBCqarPW6C",
+            "https://drive.google.com/thumbnail?sz=w1000&id=1ubw07FdoDZeqpybK_IuYEkV4WZjJ6KvI",
+            "https://drive.google.com/thumbnail?sz=w1000&id=1-0XEaNAkHNMTcfesiNsYF31v-Qw_zZYD",
+            "https://drive.google.com/thumbnail?sz=w1000&id=1e1M0_3ZeFswrhnLaEoYacuSnp4468yig"
+        ];
+
+        // ===== INICIALIZAÇÃO =====
         document.addEventListener('DOMContentLoaded', function() {
             document.body.classList.add('loaded');
             
-            // Criar partículas iniciais
-            for (let i = 0; i < 15; i++) {
-                setTimeout(() => createParticle(), i * 300);
-            }
+            // Inicializar sistemas
+            initFeaturedGallery();
+            initPhotoGallery();
+            initMusicSystem();
+            createParticles();
             
             // Primeira notificação
             setTimeout(showNotification, 5000);
+            
+            // Iniciar reprodução automática em ordem
+            setTimeout(() => setPlayMode('sequential'), 4000);
         });
 
-        // Cursor personalizado - versão melhorada
+        // ===== SISTEMA DO MURAL DE FOTOS COM EFEITO ESPELHADO =====
+        function initFeaturedGallery() {
+            const container = document.getElementById('featuredContainer');
+            const nav = document.getElementById('featuredNav');
+            let currentSlide = 0;
+
+            // Criar slides - AGORA COM EFEITO ESPELHADO
+            allPhotos.forEach((photo, index) => {
+                const slide = document.createElement('div');
+                slide.className = `featured-slide ${index === 0 ? 'active' : ''}`;
+                
+                // Conteúdo do slide com efeito espelhado
+                slide.innerHTML = `
+                    <div class="slide-content">
+                        <div class="slide-background" style="background-image: url('${photo}')"></div>
+                        <div class="slide-overlay"></div>
+                        <img src="${photo}" class="slide-image" alt="Foto ${index + 1}">
+                    </div>
+                `;
+                
+                container.appendChild(slide);
+
+                const dot = document.createElement('div');
+                dot.className = `nav-dot ${index === 0 ? 'active' : ''}`;
+                dot.onclick = () => goToSlide(index);
+                nav.appendChild(dot);
+            });
+
+            // Trocar slides automaticamente
+            setInterval(() => {
+                currentSlide = (currentSlide + 1) % allPhotos.length;
+                goToSlide(currentSlide);
+            }, 5000);
+        }
+
+        function goToSlide(index) {
+            const slides = document.querySelectorAll('.featured-slide');
+            const dots = document.querySelectorAll('.nav-dot');
+            
+            slides.forEach(slide => slide.classList.remove('active'));
+            dots.forEach(dot => dot.classList.remove('active'));
+            
+            slides[index].classList.add('active');
+            dots[index].classList.add('active');
+        }
+
+        // ===== SISTEMA DA GALERIA DE FOTOS =====
+        function initPhotoGallery() {
+            const gallery = document.getElementById('photoGallery');
+            
+            allPhotos.forEach(photo => {
+                const frame = document.createElement('div');
+                frame.className = 'photo-frame';
+                frame.onclick = () => openModal(photo);
+                
+                const img = document.createElement('img');
+                img.src = photo;
+                img.onerror = function() {
+                    this.style.display = 'none';
+                    this.parentNode.innerHTML = '💕<br><small>Foto Especial</small>';
+                };
+                
+                frame.appendChild(img);
+                gallery.appendChild(frame);
+            });
+        }
+
+        // ===== SISTEMA DO MODAL =====
+        function openModal(src) {
+            const modal = document.getElementById('imageModal');
+            const modalImg = document.getElementById('modalImage');
+            
+            modal.style.display = 'block';
+            modalImg.src = src;
+            
+            // Efeito especial ao abrir modal
+            createHeartExplosion();
+        }
+
+        function closeModal() {
+            document.getElementById('imageModal').style.display = 'none';
+        }
+
+        // Fechar modal ao clicar fora da imagem
+        window.onclick = function(event) {
+            const modal = document.getElementById('imageModal');
+            if (event.target === modal) {
+                closeModal();
+            }
+        }
+
+        // ===== SISTEMA DE MÚSICAS =====
+        function initMusicSystem() {
+            const musicSection = document.querySelector('.music-section');
+            
+            musicConfig.forEach((music, index) => {
+                const player = document.createElement('div');
+                player.className = 'music-player';
+                player.innerHTML = `
+                    <div class="music-item">
+                        <img src="${music.cover}" class="music-cover" alt="Capa do Álbum">
+                        <div class="music-info">
+                            <div class="music-name">${music.name}</div>
+                            <div class="music-artist">${music.artist}</div>
+                            <audio controls onplay="handleAudioPlay(this, ${index})" onended="handleAudioEnd(${index})">
+                                <source src="${music.src}" type="audio/mpeg">
+                                Seu navegador não suporta o elemento de áudio.
+                            </audio>
+                        </div>
+                    </div>
+                `;
+                musicSection.appendChild(player);
+                musicPlayers.push(player.querySelector('audio'));
+            });
+        }
+
+        function handleAudioPlay(audioElement, index) {
+            // Pausar áudio atual se houver
+            if (currentAudio && currentAudio !== audioElement) {
+                currentAudio.pause();
+                currentAudio.currentTime = 0;
+            }
+            
+            currentAudio = audioElement;
+            currentAudioIndex = index;
+        }
+
+        function handleAudioEnd(index) {
+            if (currentPlayMode === 'sequential') {
+                playNextSequential();
+            } else if (currentPlayMode === 'random') {
+                playRandom();
+            }
+        }
+
+        function setPlayMode(mode) {
+            currentPlayMode = mode;
+            
+            // Atualizar botões
+            document.querySelectorAll('.control-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById(`btn${mode.charAt(0).toUpperCase() + mode.slice(1)}`).classList.add('active');
+            
+            // Parar áudio atual
+            if (currentAudio) {
+                currentAudio.pause();
+                currentAudio.currentTime = 0;
+            }
+            
+            // Iniciar reprodução
+            if (mode === 'sequential') {
+                playNextSequential(0);
+            } else if (mode === 'random') {
+                playRandom();
+            }
+        }
+
+        function playNextSequential(startIndex = null) {
+            const index = startIndex !== null ? startIndex : (currentAudioIndex + 1) % musicPlayers.length;
+            const audio = musicPlayers[index];
+            
+            audio.play().catch(e => console.log('Reprodução automática bloqueada:', e));
+            currentAudioIndex = index;
+        }
+
+        function playRandom() {
+            const randomIndex = Math.floor(Math.random() * musicPlayers.length);
+            const audio = musicPlayers[randomIndex];
+            
+            audio.play().catch(e => console.log('Reprodução automática bloqueada:', e));
+            currentAudioIndex = randomIndex;
+        }
+
+        function stopAllMusic() {
+            musicPlayers.forEach(audio => {
+                audio.pause();
+                audio.currentTime = 0;
+            });
+            currentAudio = null;
+            currentPlayMode = null;
+            document.querySelectorAll('.control-btn').forEach(btn => btn.classList.remove('active'));
+        }
+
+        function toggleMuteAll() {
+            isMuted = !isMuted;
+            musicPlayers.forEach(audio => {
+                audio.muted = isMuted;
+            });
+            document.getElementById('btnMute').textContent = isMuted ? '🔊 Dessilenciar' : '🔇 Silenciar';
+        }
+
+        // ===== FUNÇÕES EXISTENTES (mantidas do código original) =====
         let cursor = document.querySelector('.custom-cursor');
         
         document.addEventListener('mousemove', (e) => {
             cursor.style.left = e.clientX - 10 + 'px';
             cursor.style.top = e.clientY - 10 + 'px';
             
-            // Criar trilha do cursor
             if (Math.random() > 0.8) {
                 let trail = document.createElement('div');
                 trail.className = 'cursor-trail';
                 trail.style.left = e.clientX - 3 + 'px';
                 trail.style.top = e.clientY - 3 + 'px';
                 document.body.appendChild(trail);
-                
                 setTimeout(() => trail.remove(), 1000);
             }
         });
 
-        // Partículas vermelhas
         function createParticle() {
             const particle = document.createElement('div');
             particle.className = 'particle';
@@ -1542,26 +1565,23 @@
             setTimeout(() => particle.remove(), 10000);
         }
 
-        // Criar partículas continuamente
-        setInterval(createParticle, 300);
+        function createParticles() {
+            for (let i = 0; i < 15; i++) {
+                setTimeout(() => createParticle(), i * 300);
+            }
+            setInterval(createParticle, 300);
+        }
 
-        // Função principal da surpresa
         function showSurprise() {
             const message = document.getElementById('specialMessage');
             message.classList.add('show');
-            
-            // Explosão de corações vermelhos
             createHeartExplosion();
-            
-            // Animação épica "TE AMO"
             createTeAmoAnimation();
             
-            // Vibração
             if (navigator.vibrate) {
                 navigator.vibrate([200, 100, 200, 100, 300]);
             }
             
-            // Mudança temporária da cor de fundo
             document.body.style.background = 'linear-gradient(135deg, #ff0040, #990026, #000000, #ff1744)';
             document.body.style.backgroundSize = '400% 400%';
             document.body.style.animation = 'gradient-shift 2s ease infinite';
@@ -1571,27 +1591,23 @@
                 document.body.style.animation = '';
             }, 4000);
             
-            // Criar mais partículas especiais
             for (let i = 0; i < 50; i++) {
                 setTimeout(() => createParticle(), i * 50);
             }
         }
 
-        // Animação épica "TE AMO"
         function createTeAmoAnimation() {
-            // Criar múltiplas animações "TE AMO"
             const teAmoTexts = [
-                'A LOLLA E EU TE AMAMOS ❤️',
-                '💖 TE AMO MUITO 💖',
-                'EU TE AMO!',
-                '❤️ MINHA BERUKA ❤️',
-                'TE AMO PARA SEMPRE!',
-                '💕 RURUKA 💕',
-                'A LOLLA TAMBÉM TE AMA!',
-                '🥰 TE AMO DEMAIS 🥰'
+                "A LOLLA E EU TE AMAMOS ❤️",
+                "💖 TE AMO MUITO 💖",
+                "EU TE AMO!",
+                "❤️ MINHA BERUKA ❤️",
+                "TE AMO PARA SEMPRE!",
+                "💕 RURUKA 💕",
+                "A LOLLA TAMBÉM TE AMA!",
+                "🥰 TE AMO DEMAIS 🥰"
             ];
             
-            // Animação central principal
             const mainTeAmo = document.createElement('div');
             mainTeAmo.innerHTML = 'TE AMO ❤️';
             mainTeAmo.style.cssText = `
@@ -1615,7 +1631,6 @@
             document.body.appendChild(mainTeAmo);
             setTimeout(() => mainTeAmo.remove(), 4000);
 
-            // Múltiplos "TE AMO" flutuantes
             for (let i = 0; i < 8; i++) {
                 setTimeout(() => {
                     const teAmo = document.createElement('div');
@@ -1643,7 +1658,6 @@
                 }, i * 200);
             }
 
-            // Chuva de "TE AMO" pequenos
             for (let i = 0; i < 15; i++) {
                 setTimeout(() => {
                     const miniTeAmo = document.createElement('div');
@@ -1664,7 +1678,6 @@
                 }, i * 150);
             }
 
-            // Efeito de pulso na tela
             const pulseOverlay = document.createElement('div');
             pulseOverlay.style.cssText = `
                 position: fixed;
@@ -1681,7 +1694,6 @@
             setTimeout(() => pulseOverlay.remove(), 2000);
         }
 
-        // Explosão de corações vermelhos
         function createHeartExplosion() {
             const hearts = ['❤️', '💖', '💕', '💗', '💓', '💝', '♥️', '💘'];
             
@@ -1700,9 +1712,7 @@
             }
         }
 
-        // Efeitos de clique na tela
         document.addEventListener('click', function(e) {
-            // Efeito de ripple
             const ripple = document.createElement('div');
             ripple.className = 'ripple-effect';
             ripple.style.left = e.clientX + 'px';
@@ -1710,7 +1720,6 @@
             document.body.appendChild(ripple);
             setTimeout(() => ripple.remove(), 1000);
             
-            // Texto flutuante
             const messages = ['TE AMO!', '❤️', 'VOCÊ É ESPECIAL!', '💖', 'MEU AMOR', '💕', 'FELIZ ANIVERSÁRIO!'];
             const message = messages[Math.floor(Math.random() * messages.length)];
             
@@ -1725,7 +1734,6 @@
             setTimeout(() => clickEffect.remove(), 1000);
         });
 
-        // Sistema de notificações românticas dark
         const romanticMessages = [
             "💖 Você é minha Berukinha!",
             "🌹 Cada dia com você é mas que especial!",
@@ -1762,7 +1770,6 @@
             setTimeout(() => notification.remove(), 4000);
         }
 
-        // Mostrar notificações aleatórias
         setInterval(showNotification, 18000);
 
         // Adicionar CSS para animações extras
@@ -1867,24 +1874,6 @@
                 100% { 
                     transform: translateX(100%); 
                     opacity: 0; 
-                }
-            }
-            
-            @keyframes click-animation {
-                0% {
-                    opacity: 1;
-                    transform: translate(-50%, -50%) scale(0.5);
-                }
-                100% {
-                    opacity: 0;
-                    transform: translate(-50%, -100%) scale(1.5);
-                }
-            }
-            
-            @keyframes ripple {
-                to {
-                    transform: scale(4);
-                    opacity: 0;
                 }
             }
         `;
